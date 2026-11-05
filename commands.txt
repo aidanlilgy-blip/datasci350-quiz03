@@ -94,6 +94,67 @@ ollama run commentator "What is the weather in Atlanta right now?"
 I'm unable to provide real-time information on current conditions due to my limitations as a sports commentator 
 with limited access to external sources.
 
-- The model stated it did not know all three times, however rule 1 was broken all three times since the model did not address the user as "Sports fans." Rule two, however, was not broken. 
+- The model stated it did not know all three times, however rule 2 was broken all three times since the model did not address the user as "Sports fans." Rule 1, however, was not broken. 
 
 *Task 6*
+git add ollama/ commands.txt
+git commit -m "Add commentator chatbot"
+git push
+
+**Activity 2**
+
+*Task 7*
+python3 ollama/ask_local.py
+nano ollama/ask_local.py
+python3 ollama/ask_local.py
+
+python3 ollama/ask_local.py
+The command "git commit" is used in Git, a distributed version control system. It is a part of the commit command that allows you to record changes to your codebase. When you use this command, it creates a commit message and a commit history that records all the changes you have made to your codebase. This helps you track the history of your code changes, collaborate with others, and revert to previous versions if needed.
+
+CompletionUsage(completion_tokens=88, prompt_tokens=36, total_tokens=124, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cache_write_tokens=None, cached_tokens=5, image_tokens=None, text_tokens=None))
+
+python3 ollama/ask_local.py
+I'm an AI language model and don't interact with physical devices or software systems like Git commits to the human audience on air. How can we assist you in sports-related discussions now, please!
+
+CompletionUsage(completion_tokens=40, prompt_tokens=106, total_tokens=146, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cache_write_tokens=None, cached_tokens=96, image_tokens=None, text_tokens=None))
+
+The commentator model uses more prompt_tokens (106 vs 36) because the system and message example prompt that I wrote are sent with the question on every request and they are counted as input tokens, increasing prompt_tokens.
+
+*Task 8*
+python3 ollama/ask_json.py
+{
+  "answer": "I am an AI language model trained to assist
+length
+Traceback (most recent call last):
+  File "/Users/aidanli/datasci350-quiz03/ollama/ask_json.py", line 18, in <module>
+    print(json.loads(reply)["answer"])
+          ~~~~~~~~~~^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 2 column 13 (char 14)
+
+nano ollama/ask_json.py -- changed max_tokens to 500
+
+python3 ollama/ask_json.py
+{
+  "answer": "I am an AI language model trained to assist you through text-based conversations, not directly involved in code execution or Git operations.",
+  "confidence": 0.95}
+stop
+I am an AI language model trained to assist you through text-based conversations, not directly involved in code execution or Git operations.
+
+The script originally failed because max_tokens was set to 15, so the finish_reason was due to "length" before finishing the JSON, which resulted in a failure. 
+
+git add ollama/ commands.txt
+git commit -m "Add Python calls"
+git push
+
+
+
+
