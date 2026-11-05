@@ -149,12 +149,45 @@ python3 ollama/ask_json.py
 stop
 I am an AI language model trained to assist you through text-based conversations, not directly involved in code execution or Git operations.
 
-The script originally failed because max_tokens was set to 15, so the finish_reason was due to "length" before finishing the JSON, which resulted in a failure. 
+The script originally failed because max_tokens was set to 15, so the finish_reason was due to "length" before finishing the JSON, this means the incomplete string could not be parsed.
 
 git add ollama/ commands.txt
 git commit -m "Add Python calls"
 git push
 
+**Activity 3**
+
+*Task 10*
+chmod 400 ~/quiz03key.pem
+ssh -i ~/quiz03key.pem ubuntu@ec2-3-135-230-97.us-east-2.compute.amazonaws.com
+ubuntu@ip-172-31-30-59:~$
+
+*Task 11*
+sudo apt update
+sudo apt install -y python3-pandas python3-matplotlib python3-seaborn
+
+*Task 12*
+scp -i /Users/aidanli/quiz03key.pem aws/traffic_analysis.py aws/website_traffic.txt ubuntu@ec2-3-135-230-97.us-east-2.compute.amazonaws.com:~
+
+*Task 13*
+python3 traffic_analysis.py > results.txt
+cat /var/lib/cloud/data/instance-id >> results.txt
+sha256sum results.txt > fingerprint.txt
+
+*Task 14*
+scp -i /Users/aidanli/quiz03key.pem ubuntu@ec2-3-135-230-97.us-east-2.compute.amazonaws.com:~/results.txt aws/
+scp -i /Users/aidanli/quiz03key.pem ubuntu@ec2-3-135-230-97.us-east-2.compute.amazonaws.com:~/fingerprint.txt aws/
+scp -i /Users/aidanli/quiz03key.pem ubuntu@ec2-3-135-230-97.us-east-2.compute.amazonaws.com:~/traffic_analysis.png aws/
+
+*Task 15*
+When I stop an instance instead of terminating it, I still pay for storage volume (EBS), this keeps my files until I terminate it. 
+
+Had Claude AI explain to me how to properly format the SCP in tasks 11, 12, 13, 14. Additionally, I wasn't super confident with how to use ssh -i, so I asked if my formatting was correct for that command (task 10). Referred to the slides multiple times for the first two activities, and in the end asked Claude AI to check to make sure I answered every question fully and accurately. No commands were run for me, I typed and ran every command myself, and all my written answers were done by me. 
+
+git add .
+git status
+git commit -m "Add AWS analysis results"
+git push
 
 
 
