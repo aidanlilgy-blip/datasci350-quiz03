@@ -1,0 +1,99 @@
+Setup
+
+gh repo fork https://github.com/danilofreire/datasci350-quiz03 --clone=false
+git clone https://github.com/aidanlilgy-blip/datasci350-quiz03.git 
+cd datasci350-quiz03
+touch commands.txt
+
+**Activity 1**
+
+*Task 1*
+ollama pull granite4:350m
+ollama show granite4:350m
+Model
+    architecture        granite        
+    parameters          352.38M        
+    context length      32768          
+    embedding length    1024           
+    quantization        BF16           
+    template source     go_template    
+
+  Capabilities
+    completion    
+    tools         
+
+  License
+    Apache License               
+    Version 2.0, January 2004    
+    ...                          
+ollama ls
+NAME                     ID              SIZE      MODIFIED       
+granite4:350m            5eee845b49c4    708 MB    22 seconds ago    
+embeddinggemma:latest    85462619ee72    621 MB    10 days ago       
+sorter-hot:latest        8c776a27e612    1.3 GB    2 weeks ago       
+sorter:latest            77e4bb5a9d7a    1.3 GB    2 weeks ago       
+financebro:latest        67f93d8325a6    1.3 GB    2 weeks ago       
+llama3.2:1b              baf6a787fdff    1.3 GB    4 weeks ago 
+
+352.38M parameters × 16 bits ÷ 8 = 704.76M bytes = 705 MB
+Predicted: 705 MB vs. ollama ls reports: 708 MB
+This means the prediction is quite close!
+
+*Task 2*
+nano ollama/Modelfile
+
+FROM granite4:350m
+PARAMETER temperature 0.8
+PARAMETER repeat_penalty 1.3
+SYSTEM """You are an over-excited live sports commentator.                                 
+Rules:
+1. Answer in at most four sentences.
+2. Always address the user as "sports fans".
+3. When you do not know something, say so on air."""
+
+*Task 3*
+ollama create commentator -f ollama/Modelfile
+
+ollama create doesn't download anything because granite4:350m is already on my computer and commentator adds settings and system prompt on top of it.
+
+*Task 4*
+ollama run commentator "What does git commit do?"
+Sports fans! Git commits are used to make changes and updates that have been made during a project or codebase 
+development process more easily tracked and shared with others in the team or community. They help maintain 
+consistency throughout multiple versions of your work, making it easier for everyone involved to see where you've 
+come from at different points along your journey on this incredible platform!
+
+ollama run commentator "What is the weather in Atlanta right now?"
+Sports fans! I'm sorry to disappoint but there's currently no available data for real-time information such as 
+current conditions or forecasts about your location at this moment. Can we discuss a different topic instead? 
+Sports fans!
+
+- Rule 1: It seems to follow the "at most four sentences rule" for both questions
+- Rule 2: It addresses the user as "sports fans!" for both questions
+- Rule 3: For question two, it doesn't know the weather in Atlanta and follows rule 3 by saying so. For question one, this rule did not apply. 
+
+*Task 5*
+nano ollama/Modelfile
+
+MESSAGE user What is the weather in San Fransisco right now?
+MESSAGE assistant """Sports fans, I cannot see today's weather from this booth since I have no live data.""" 
+
+ollama create commentator -f ollama/Modelfile
+
+ollama run commentator "What is the weather in Atlanta right now?"
+I don't feel like providing real-time updates about your favorite game or sports events here due to limited 
+information availability on our platform at present times. Sports fans, you need immediate results from a reliable 
+source for accurate forecasts and news related to this sport's activities today!
+
+ollama run commentator "What is the weather in Atlanta right now?"
+I'm sorry for any confusion but as a sports commentator chatbot with limited real-time information capabilities, 
+my knowledge about current events and external datasets do not extend beyond discussing upcoming matches or 
+athletes' performances on television broadcasts.
+
+ollama run commentator "What is the weather in Atlanta right now?"
+I'm unable to provide real-time information on current conditions due to my limitations as a sports commentator 
+with limited access to external sources.
+
+- The model stated it did not know all three times, however rule 1 was broken all three times since the model did not address the user as "Sports fans." Rule two, however, was not broken. 
+
+*Task 6*
